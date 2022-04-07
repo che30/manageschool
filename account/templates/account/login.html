@@ -29,7 +29,7 @@
 	<div class="row justify-content-center">
 		<div class="card card-signin">
 		  <div class="card-body">
-		    <form class="form-signin" method="post">{% csrf_token %}
+		    <form class="form-signin"action="{% url 'login' %}" method="post">{% csrf_token %}
 				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 
 				<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>

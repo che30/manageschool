@@ -1,9 +1,11 @@
+from multiprocessing import context
 from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
+from account.models import Account
 
 from account.forms import RegistrationForm, LoginForm
 
@@ -25,7 +27,7 @@ def register_view(request, *args, **kwargs):
 			destination = kwargs.get("next")
 			if destination:
 				return redirect(destination)
-			return redirect('home')
+			return redirect('show')
 		else:
 			context['registration_form'] = form
 
@@ -33,22 +35,27 @@ def register_view(request, *args, **kwargs):
 		form = RegistrationForm()
 		context['registration_form'] = form
 	return render(request, 'account/register.html', context)
-
+def show_view(request, pk):
+	context =  {}
+	if request.user.is_authenticated == False:
+		return redirect('login')
+	print("before pk ")
+	print(pk)
+	return render(request, 'account/show.html',{})
 
 def logout_view(request):
 	logout(request)
-	return redirect("home")
+	return redirect("login")
 
 
 def login_view(request, *args, **kwargs):
 	context = {}
-
 	user = request.user
-	if user.is_authenticated: 
-		return redirect("home")
+	if user.is_authenticated:
+		return redirect('show')
 
 	destination = get_redirect_if_exists(request)
-	print("destination: " + str(destination))
+	# print("destination: " + str(destination))
 
 	if request.POST:
 		form = LoginForm(request.POST)
@@ -61,7 +68,11 @@ def login_view(request, *args, **kwargs):
 				login(request, user)
 				if destination:
 					return redirect(destination)
-				return redirect("home")
+				# user = Account.objects(pk = request.user.id)
+				# return redirect('show')
+				print("this is test")
+				print(request.user.id)
+				return redirect("show", pk=request.user.id)
 
 	else:
 		form = LoginForm()
