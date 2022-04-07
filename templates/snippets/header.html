@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-center mt-3">
+	{% if request.user.is_authenticated == False %}
+	<div><a href="{% url 'register' %}" class="text-decoration-none"> Register</a></div>
+	<div class="mx-3"><a href="{% url 'login' %}" class="text-decoration-none"> Login</a></div>
+	{%else%}
+	<div><a href="{% url 'logout' %}" class="text-decoration-none"> Logout</a></div>
+	{% endif %}
+
+</div>
