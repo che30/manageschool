@@ -27,7 +27,7 @@ def register_view(request, *args, **kwargs):
 			destination = kwargs.get("next")
 			if destination:
 				return redirect(destination)
-			return redirect('show')
+			return redirect('show', pk=request.user.id)
 		else:
 			context['registration_form'] = form
 
@@ -36,18 +36,12 @@ def register_view(request, *args, **kwargs):
 		context['registration_form'] = form
 	return render(request, 'account/register.html', context)
 def show_view(request, pk):
-	context =  {}
-	account = None
 	if request.user.is_authenticated == False:
 		return redirect('login')
 	try:
-		account = Account.objects.get(pk = pk)
+		Account.objects.get(pk = pk)
 	except Account.DoesNotExist:
 		return render(request,'404.html')
-	print (account)
-	
-	# print("before pk ")
-	# print(pk)
 	return render(request, 'account/show.html',{})
 
 def logout_view(request):
