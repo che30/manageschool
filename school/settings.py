@@ -41,6 +41,11 @@ INSTALLED_APPS = [
     'home',
     'helper',
     'student',
+    'department',
+    'teacher',
+    'courses',
+    'attendance',
+    'marks',
 ]
 
 MIDDLEWARE = [
