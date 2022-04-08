@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<style type="text/css">
+	.my-grid{
+		border: 1px solid black;
+	}
+	.my-grid-item{
+		border: 1px solid blue;
+	}
+</style>
+
+<!-- Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+<div class="container">
+<h1 class="text-center">Page you are looking for does not exist</h1>
+<h5 class="text-center"><a href={% url 'home' %}>back to home </a></h5>
+	
+</div>
+{% endblock content %}

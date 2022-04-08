@@ -24,3 +24,4 @@ urlpatterns = [
     # path('', include('userevents.urls')),
     # path('', include('attendance.urls'))
 ]
+handler404="helper.views.handle_not_found"
