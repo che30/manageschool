@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'snippets/header.html' %}
+<style type="text/css">
+	.my-grid{
+		border: 1px solid black;
+	}
+	.my-grid-item{
+		border: 1px solid blue;
+	}
+	select{
+		width: 100%;
+	}
+	option{
+		font-size: 2rem;
+	}
+</style>
+
+<!-- Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+<div class="container">
+<div class="text-center">Am in new attendance view</div>
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="card card-signin">
+		  <div class="card-body">
+		    <form action="{% url 'create-attendance' %}" class="form-signin" method="post">{% csrf_token %}
+				{{form.as_p}}
+		
+				{% if form.non_field_errors %}
+				<div style="color: red">
+					<p>{{events_form.non_field_errors}}</p>
+				</div>
+
+				{% endif %}
+
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+
+				</form>
+		  </div>
+		</div>
+		
+	</div>
+</div>
+
+</div>
+{% endblock content %}

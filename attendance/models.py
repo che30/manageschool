@@ -7,4 +7,6 @@ class Attendance(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     def __str__(self):
-        return self.student + self.course
+        
+        # return " ".join([self.student.first_name, self.student.last_name, self.course.name])
+        return "% s % s % s " %(self.student.first_name, self.student.last_name, self.course.name)

@@ -6,6 +6,7 @@ from courses.models import Course
 from teacher.models import Teacher
 from attendance.models import Attendance
 from department.models import Department
+from marks.models import Mark
 # Register your models here.
 class AccountAdmin(UserAdmin):
   list_display = ('email','username','date_joined','last_login','is_admin','is_staff')
@@ -20,3 +21,4 @@ admin.site.register(Attendance)
 admin.site.register(Course)
 admin.site.register(Department)
 admin.site.register(Teacher)
+admin.site.register(Mark)

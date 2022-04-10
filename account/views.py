@@ -1,19 +1,20 @@
-from multiprocessing import context
 from django.shortcuts import render
 from django.http import Http404
-# Create your views here.
+from django import forms
+from attendance.forms import AttendanceForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from account.models import Account
 
 from account.forms import RegistrationForm, LoginForm
+from student.models import Student
 
 
 def register_view(request, *args, **kwargs):
 	user = request.user
 	if user.is_authenticated: 
-		return HttpResponse("You are already authenticated as " + str(user.email))
+		return redirect('show',pk=request.user.id)
 
 	context = {}
 	if request.POST:
@@ -36,13 +37,23 @@ def register_view(request, *args, **kwargs):
 		context['registration_form'] = form
 	return render(request, 'account/register.html', context)
 def show_view(request, pk):
+	context = {}
+	form = AttendanceForm()
 	if request.user.is_authenticated == False:
 		return redirect('login')
 	try:
 		Account.objects.get(pk = pk)
 	except Account.DoesNotExist:
 		return render(request,'404.html')
-	return render(request, 'account/show.html',{})
+	
+	# if student_number != 'adminone':
+	# 	student_instance = Student.objects.filter(registration_number = student_number)[0]
+		# form.fields['student'].initial = student_instance
+	# else:
+		# return redirect("show-admin")
+	# form.fields['student'].widget = forms.HiddenInput()
+	# context['form'] = form
+	return render(request, 'account/show.html',context)
 
 def logout_view(request):
 	logout(request)
@@ -87,3 +98,5 @@ def get_redirect_if_exists(request):
 		if request.GET.get("next"):
 			redirect = str(request.GET.get("next"))
 	return redirect
+def admins_only_view(request):
+	return render(request,"account/admins.html")

@@ -32,7 +32,6 @@ class Account(AbstractUser):
   username = models.CharField(max_length=30, unique=True)
   date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
   last_login = models.DateTimeField(verbose_name="last_login", auto_now=True)
-  registration_number = models.CharField(max_length=8, verbose_name="registration number",unique=True,blank=False)
   is_admin = models.BooleanField(default=False)
   is_active = models.BooleanField(default=True)
   is_staff = models.BooleanField(default=False) 

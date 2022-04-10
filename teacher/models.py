@@ -6,4 +6,4 @@ class Teacher(models.Model):
     first_name = models.CharField(verbose_name="first name", max_length=32)
     last_name = models.CharField(verbose_name="last name", max_length=32)
     def __str__(self):
-        return self.first_name + self.last_name
+        return" %s %s " %(self.first_name , self.last_name)
