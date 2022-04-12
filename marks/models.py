@@ -1,4 +1,3 @@
-from pyexpat import model
 from django.db import models
 from attendance.models import Attendance
 from student.models import Student
@@ -13,4 +12,6 @@ class Mark(models.Model):
     ca_one = models.IntegerField(verbose_name="first continuous assesment",default=0)
     ca_two = models.IntegerField(verbose_name="second continuous assesment",default=0)
     def __str__(self):
-        return self.student.registration_number
+        return"%s %s %s " %(self.student.first_name,
+         self.student.last_name,
+         self.student.matricule_number)

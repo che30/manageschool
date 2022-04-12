@@ -6,9 +6,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from account.models import Account
-
+from django.urls import reverse
 from account.forms import RegistrationForm, LoginForm
 from student.models import Student
+from courses.models import Course
 
 
 def register_view(request, *args, **kwargs):
@@ -64,7 +65,7 @@ def login_view(request, *args, **kwargs):
 	context = {}
 	user = request.user
 	if user.is_authenticated:
-		return redirect('show')
+		return redirect('show',pk=request.user.id)
 
 	destination = get_redirect_if_exists(request)
 	# print("destination: " + str(destination))
@@ -75,13 +76,15 @@ def login_view(request, *args, **kwargs):
 			email = request.POST['email']
 			password = request.POST['password']
 			user = authenticate(email=email, password=password)
-
 			if user:
 				login(request, user)
 				if destination:
 					return redirect(destination)
 				# user = Account.objects(pk = request.user.id)
 				# return redirect('show')
+				if user.is_staff:
+					return redirect('my-courses')
+					# redirect(reverse('my-course', kwargs={ 'courses': teacher_course }))
 				return redirect("show", pk=request.user.id)
 
 	else:
@@ -99,4 +102,4 @@ def get_redirect_if_exists(request):
 			redirect = str(request.GET.get("next"))
 	return redirect
 def admins_only_view(request):
-	return render(request,"account/admins.html")
+	return HttpResponse(request, "admin/")

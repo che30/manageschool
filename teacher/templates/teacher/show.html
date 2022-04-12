@@ -18,24 +18,21 @@
 
 <!-- Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
 <div class="container">
-<div class="text-center">Select a course </div>
 <div class="container-fluid">
 	<div class="row justify-content-center">
 		<!-- <div class="card card-signin"> -->
 		  <!-- <div class="card-body"> -->
-		    <form action="{% url 'create-attendance' %}" class="form-signin" method="post">{% csrf_token %}
-				{{form.as_p}}
-		
-				{% if form.non_field_errors %}
-				<div style="color: red">
-					<p>{{events_form.non_field_errors}}</p>
-				</div>
-
-				{% endif %}
-
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-
-				</form>
+		   Am in teacher show view
+		   {% if teacher_course %}
+		   {% for course in teacher_course %}
+		   <div>
+			<!-- <a href="/polls/{{ question.id }}/"> -->
+			<a href="/my-courses/{{course.id}}">{{course.name}}</a>
+		   </div>
+		   
+		   {%endfor%}
+		   {%endif%}
+		 
 		  <!-- </div> -->
 		<!-- </div> -->
 		

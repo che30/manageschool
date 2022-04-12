@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+import teacher
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('', include('account.urls')),
     path('', include('attendance.urls')),
+    path('',include('teacher.urls')),
     # path('', include('userevents.urls')),
     # path('', include('attendance.urls'))
 ]
