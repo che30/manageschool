@@ -22,14 +22,12 @@
 	<div class="row justify-content-center">
 		<!-- <div class="card card-signin"> -->
 		  <!-- <div class="card-body"> -->
-		  <div class="text-center"> YOUR COURSES THOUGHT </div>
+		   Am in exam choice
 		   {% if teacher_course %}
 		   {% for course in teacher_course %}
-		   <div class="d-flex justify-content-around">
+		   <div>
 			<!-- <a href="/polls/{{ question.id }}/"> -->
-			<div><a href="/my-courses/{{course.id}}/1"><span>CONTINUOS ASSESMENT</span> <span>{{course.name}}</span></a></div>
-			<div><a href="/my-courses/{{course.id}}/2"><span>EXAMS</span> <span>{{course.name}}</span></a></div>
-			<div><a href="/my-courses/{{course.id}}/3"><span>RESIT</span> <span>{{course.name}}</span></a></div>
+			<a href="/my-courses/{{course_id}}/choice">{{course.name}}</a>
 		   </div>
 		   
 		   {%endfor%}

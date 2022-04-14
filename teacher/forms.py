@@ -5,4 +5,4 @@ from django.forms import ModelForm
 class UpdateMarksForm(ModelForm):
     class Meta:
         model = Mark
-        fields = ['ca_one']
+        fields = ['ca']
