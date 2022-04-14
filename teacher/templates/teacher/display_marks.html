@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'snippets/header.html' %}
+<style type="text/css">
+	.my-grid{
+		border: 1px solid black;
+	}
+	.my-grid-item{
+		border: 1px solid blue;
+	}
+	select{
+		width: 100%;
+	}
+	option{
+		font-size: 2rem;
+	}
+    .bt-submit{
+        float: right;
+        margin-right: 10%;
+    }
+    .mark__input{
+        width: 50px;
+    }
+    label{
+        display: none;
+    }
+    input{
+        width: 50px;
+    }
+</style>
+
+<!-- Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+		<div class="text-center">Update view</div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2">
+                    <div>
+                        Matricule
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                    First name
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                    Last name
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div>
+                        Mark
+                    </div>
+                </div>
+                <form action={% url 'show-marks' course_id %} method="POST"> {% csrf_token %}
+                {% for marks in student_marks %}
+                {% for f in form %}
+                {% if forloop.counter == forloop.parentloop.counter %}
+                <div class="row">
+                <div class="col-2 py-2">
+                    <div> {{marks.student.matricule_number}} </div>
+                   
+                </div>
+                <div class="col-4 py-2">
+                    <div> {{marks.student.first_name}} </div>
+                </div>
+                <div class="col-4 py-2">
+                    <div> {{marks.student.last_name}} </div>
+                </div>
+                <div class="col-1 py-2">
+                        <!-- {{form}} -->
+                        {{f}}
+                        <!-- <input class="mark__input" name="mark" type="number" value={{marks.ca_one}} autofocus> -->
+                   
+                </div>
+            </div>
+            
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+                <button class="btn btn-lg btn-primary bt-submit">submit</button>
+            </form>
+            </div>
+        </div>
+{% endblock content %}
