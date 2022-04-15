@@ -39,7 +39,7 @@
 <!-- Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
 		<div class="text-center">Update view</div>
         <div class="container-fluid">
-            <div class="row">
+            <div class="row text-center">
                 <div class="col-2">
                     <div>
                         Matricule
@@ -64,7 +64,7 @@
                 {% for marks in student_marks %}
                 {% for f in form %}
                 {% if forloop.counter == forloop.parentloop.counter %}
-                <div class="row">
+                <div class="row text-center">
                 <div class="col-2 py-2 border-r">
                     <div> {{marks.student.matricule_number}} </div>
                    
