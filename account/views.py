@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from django.http import Http404
-from django import forms
-from attendance.forms import AttendanceForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
@@ -10,6 +8,9 @@ from django.urls import reverse
 from account.forms import RegistrationForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user,allowed_users
+from django.contrib.auth.models import Group
+from attendance.models import Attendance
+import datetime
 @unauthenticated_user
 def register_view(request, *args, **kwargs):
 	# user = request.user
@@ -17,14 +18,18 @@ def register_view(request, *args, **kwargs):
 	if request.POST:
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
-			form.save()
+			user=form.save()
 			email = form.cleaned_data.get('email').lower()
 			raw_password = form.cleaned_data.get('password1')
 			account = authenticate(email=email, password=raw_password)
+			group = Group.objects.get(name = 'student')
 			login(request, account)
 			destination = kwargs.get("next")
 			if destination:
 				return redirect(destination)
+			# print(user)
+			group.user_set.add(user)
+			# user.group.add(group)
 			return redirect('show', pk=request.user.id)
 		else:
 			context['registration_form'] = form
@@ -37,12 +42,17 @@ def register_view(request, *args, **kwargs):
 @allowed_users(allowed_roles=['student'])
 def show_view(request, pk):
 	context = {}
+	current_date = datetime.datetime.now()
+	attendance = None
 	try:
 		Account.objects.get(pk = pk)
+		attendance = Attendance.objects.filter(student_id = request.user.id,
+		date__contains=str(current_date)[:4])
 	except Account.DoesNotExist:
 		return render(request,'404.html')
 	if request.user.id != pk:
 		return render(request,'404.html')
+	context['attendance'] = attendance
 	return render(request, 'account/show.html',context)
 
 def logout_view(request):
