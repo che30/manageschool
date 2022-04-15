@@ -26,6 +26,7 @@
 	<div>LECTURER</div>
 	</div> -->
 	<div class="container">
+		<div class="text-center bg-primary text-white">REGISTERED COURSES</div>
 		<div class="row text-center">
 			<div class="col-3"><div>COURSE ID</div></div>
 			<div class="col-3"><div> COURSE CREDIT</div></div>
@@ -45,6 +46,37 @@
 	{%else%}
 	<h1 class="text-center bg-success text-white">You have no course registered yet</h1>
 	{%endif %}
+	{% if course_marks %}
+	 <div class="text-center bg-primary text-white">RESULTS</div>
+	 <div class="container">
+		 <div class="row text-center">
+			 <div class="col-4">
+				 COURSE NAME
+			 </div>
+			 <div class="col-4">
+				 CONTINUOUS ASSESMENT
+			 </div>
+			 <div class="col-4">
+				 EXAM
+			 </div>
+		 </div>
+	 </div>
+	{% for mark in course_marks %}
+	<div class="row text-center">
+		<div class="col-4">
+			<div>{{mark.course}}</div>
+		</div>
+		<div class="col-4">
+			<div>{{mark.ca}}</div>
+		</div>
+		<div class="col-4">
+			<div>{{mark.exam}}</div>
+		</div>
+	</div>
+	{% endfor %}
+	{%else%}
+	<div>Marks are not yet available</div>
+	{%endif%}
 <a class="btn btn-lg bg-primary text-white add__attend" href="{% url 'new-attendance' %}"> New attendance</a>
 </div>
 {% endblock content %}

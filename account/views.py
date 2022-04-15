@@ -7,7 +7,7 @@ from account.models import Account
 from django.urls import reverse
 from account.forms import RegistrationForm, LoginForm
 from django.contrib.auth.decorators import login_required
-
+from marks.models import Mark
 from student.models import Student
 from .decorators import unauthenticated_user,allowed_users
 from django.contrib.auth.models import Group
@@ -46,23 +46,25 @@ def show_view(request, pk):
 	context = {}
 	current_date = datetime.datetime.now()
 	attendance = None
+	course_marks = None
 	try:
 		Account.objects.get(pk = pk)
 		user = Student.objects.get(institutional_email = request.user.email)
 		attendance = Attendance.objects.filter(student_id = user.id,
 		date__contains=str(current_date)[:4])
-		print(request.user.id)
+		course_marks =  Mark.objects.filter(student_id = user.id).filter(attendance__date__contains='2022')
 	except Account.DoesNotExist:
 		return render(request,'404.html')
 	if request.user.id != pk:
 		return render(request,'404.html')
 	context['attendance'] = attendance
+	context['course_marks'] = course_marks
 	return render(request, 'account/show.html',context)
 
 def logout_view(request):
 	logout(request)
 	return redirect("login")
-
+# @allowed_users(allowed_roles=['student','staff'])
 @unauthenticated_user
 def login_view(request, *args, **kwargs):
 	context = {}
