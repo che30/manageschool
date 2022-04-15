@@ -12,10 +12,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user,allowed_users
 @unauthenticated_user
 def register_view(request, *args, **kwargs):
-	user = request.user
-	# if user.is_authenticated: 
-	# 	return redirect('show',pk=request.user.id)
-
+	# user = request.user
 	context = {}
 	if request.POST:
 		form = RegistrationForm(request.POST)
@@ -40,19 +37,12 @@ def register_view(request, *args, **kwargs):
 @allowed_users(allowed_roles=['student'])
 def show_view(request, pk):
 	context = {}
-	form = AttendanceForm()
 	try:
 		Account.objects.get(pk = pk)
 	except Account.DoesNotExist:
 		return render(request,'404.html')
-	
-	# if student_number != 'adminone':
-	# 	student_instance = Student.objects.filter(registration_number = student_number)[0]
-		# form.fields['student'].initial = student_instance
-	# else:
-		# return redirect("show-admin")
-	# form.fields['student'].widget = forms.HiddenInput()
-	# context['form'] = form
+	if request.user.id != pk:
+		return render(request,'404.html')
 	return render(request, 'account/show.html',context)
 
 def logout_view(request):
@@ -63,11 +53,8 @@ def logout_view(request):
 def login_view(request, *args, **kwargs):
 	context = {}
 	user = request.user
-	# if user.is_authenticated:
-	# 	return redirect('show',pk=request.user.id)
 
 	destination = get_redirect_if_exists(request)
-	# print("destination: " + str(destination))
 
 	if request.POST:
 		form = LoginForm(request.POST)
