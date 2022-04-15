@@ -8,6 +8,7 @@ from django.contrib.auth import login, authenticate, logout
 from account.models import Account
 from django.urls import reverse
 from account.forms import RegistrationForm, LoginForm
+from django.contrib.auth.decorators import login_required
 from student.models import Student
 from courses.models import Course
 
@@ -37,11 +38,10 @@ def register_view(request, *args, **kwargs):
 		form = RegistrationForm()
 		context['registration_form'] = form
 	return render(request, 'account/register.html', context)
+@login_required(login_url="/login")
 def show_view(request, pk):
 	context = {}
 	form = AttendanceForm()
-	if request.user.is_authenticated == False:
-		return redirect('login')
 	try:
 		Account.objects.get(pk = pk)
 	except Account.DoesNotExist:
@@ -101,5 +101,6 @@ def get_redirect_if_exists(request):
 		if request.GET.get("next"):
 			redirect = str(request.GET.get("next"))
 	return redirect
+@login_required(login_url="/login")
 def admins_only_view(request):
 	return HttpResponse(request, "admin/")

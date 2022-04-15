@@ -2,17 +2,18 @@ from django.shortcuts import render,redirect
 from attendance.models import Attendance
 from courses.models import Course
 from django.forms import modelformset_factory
+from django.contrib.auth.decorators import login_required
 # from marks.forms import UpdateMarkForm
 from marks.models import Mark
 import datetime
-
-from teacher.forms import UpdateMarksForm
 # Create your views here.
+@login_required(login_url="/login")
 def show_teacher_view(request):
     context = {}
     teacher_course = Course.objects.filter(teacher__institutional_email =request.user.email)
     context['teacher_course'] = teacher_course
     return render(request, 'teacher/show.html',context)
+@login_required(login_url="/login")
 def render_update_marks(request,course_id, id=None):
    exam_type = None
    if id == 1:
@@ -52,13 +53,4 @@ course_id=course_id))
    context['id'] = id
    return render(request, 'teacher/display_marks.html',context)
 def update_marks(request):
-    # print(request.POST)
-    if request.POST:
-        # form = UpdateMarksForm(request.POST)
-        # if form.is_valid():
-        print(" c'est belle et bien la")
-        print(" c'est belle et bien la")
-    else:
-        form = UpdateMarksForm()
-        # context['form'] = form
     return redirect('my-courses')
