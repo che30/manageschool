@@ -8,6 +8,7 @@ from account.models import Account
 from student.models import Student
 from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 @login_required(login_url="/login")
 @allowed_users (allowed_roles=['student'])
 def new_attendance_view(request):
@@ -39,7 +40,8 @@ def create_new_attendance(request):
             new_mark = Mark(student_id=student_instance.id,course_id=course_instance.id,attendance_id=new_attendace_id)
             new_mark.save()
         else:
-           raise forms.ValidationError('You are already attending this course')
+           messages.error(request, "Sorry but you are alerady attending this course")
+        #    raise forms.ValidationError('You are already attending this course')
             
      return redirect('show', pk=request.user.id)
    #   return render(request,'attendance/attend.html')

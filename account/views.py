@@ -7,6 +7,8 @@ from account.models import Account
 from django.urls import reverse
 from account.forms import RegistrationForm, LoginForm
 from django.contrib.auth.decorators import login_required
+
+from student.models import Student
 from .decorators import unauthenticated_user,allowed_users
 from django.contrib.auth.models import Group
 from attendance.models import Attendance
@@ -46,8 +48,10 @@ def show_view(request, pk):
 	attendance = None
 	try:
 		Account.objects.get(pk = pk)
-		attendance = Attendance.objects.filter(student_id = request.user.id,
+		user = Student.objects.get(institutional_email = request.user.email)
+		attendance = Attendance.objects.filter(student_id = user.id,
 		date__contains=str(current_date)[:4])
+		print(request.user.id)
 	except Account.DoesNotExist:
 		return render(request,'404.html')
 	if request.user.id != pk:
