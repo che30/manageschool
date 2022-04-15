@@ -15,8 +15,13 @@
 		font-size: 2rem;
 	}
     .bt-submit{
-        float: right;
-        margin-right: 10%;
+        position: absolute;
+        left: 45%;
+        bottom: 10px;
+        z-index: 1;
+        width: 15vw;
+        /* float: right;
+        margin-right: 10%; */
     }
     .mark__input{
         width: 50px;
@@ -25,14 +30,14 @@
         display: none;
     }
     input{
-        width: 50px;
+        width: 100%;
+        padding: 1px 20px 1px 5px;
     }
     .border-r{
         border-right: 1px solid black;
     }
     .row {
         border: 1px solid black;
-        border-bottom: none;
     }
 </style>
 
@@ -64,15 +69,15 @@
                 {% for marks in student_marks %}
                 {% for f in form %}
                 {% if forloop.counter == forloop.parentloop.counter %}
-                <div class="row text-center">
-                <div class="col-2 py-2 border-r">
+                <div class="row">
+                <div class="col-2 py-2 border-r  text-center">
                     <div> {{marks.student.matricule_number}} </div>
                    
                 </div>
-                <div class="col-4 py-2 border-r">
+                <div class="col-4 py-2 border-r  text-center">
                     <div> {{marks.student.first_name}} </div>
                 </div>
-                <div class="col-4 py-2 border-r">
+                <div class="col-4 py-2 border-r  text-center">
                     <div> {{marks.student.last_name}} </div>
                 </div>
                 <div class="col-1 py-2">

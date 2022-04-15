@@ -6,6 +6,10 @@ from attendance.forms import AttendanceForm
 from attendance.models import Attendance
 from account.models import Account
 from student.models import Student
+from account.decorators import allowed_users
+from django.contrib.auth.decorators import login_required
+@login_required(login_url="/login")
+@allowed_users (allowed_roles=['student'])
 def new_attendance_view(request):
     context = {}
 
@@ -17,9 +21,9 @@ def new_attendance_view(request):
     form.fields['student'].widget = forms.HiddenInput()
     context['form'] = form
     return render(request, 'attendance/attend.html', context)
+@login_required(login_url="/login")
+@allowed_users (allowed_roles=['student'])
 def create_new_attendance(request):
-     if request.user.is_authenticated == False:
-        return redirect('login')
      form = AttendanceForm(request.POST)
      if form.is_valid():
         student_instance = form.cleaned_data.get('student')
