@@ -9,14 +9,12 @@ from account.models import Account
 from django.urls import reverse
 from account.forms import RegistrationForm, LoginForm
 from django.contrib.auth.decorators import login_required
-from student.models import Student
-from courses.models import Course
-
-
+from .decorators import unauthenticated_user,allowed_users
+@unauthenticated_user
 def register_view(request, *args, **kwargs):
 	user = request.user
-	if user.is_authenticated: 
-		return redirect('show',pk=request.user.id)
+	# if user.is_authenticated: 
+	# 	return redirect('show',pk=request.user.id)
 
 	context = {}
 	if request.POST:
@@ -39,6 +37,7 @@ def register_view(request, *args, **kwargs):
 		context['registration_form'] = form
 	return render(request, 'account/register.html', context)
 @login_required(login_url="/login")
+@allowed_users(allowed_roles=['student'])
 def show_view(request, pk):
 	context = {}
 	form = AttendanceForm()
@@ -60,12 +59,12 @@ def logout_view(request):
 	logout(request)
 	return redirect("login")
 
-
+@unauthenticated_user
 def login_view(request, *args, **kwargs):
 	context = {}
 	user = request.user
-	if user.is_authenticated:
-		return redirect('show',pk=request.user.id)
+	# if user.is_authenticated:
+	# 	return redirect('show',pk=request.user.id)
 
 	destination = get_redirect_if_exists(request)
 	# print("destination: " + str(destination))
@@ -82,10 +81,10 @@ def login_view(request, *args, **kwargs):
 					return redirect(destination)
 				# user = Account.objects(pk = request.user.id)
 				# return redirect('show')
-				if user.is_staff:
-					return redirect('my-courses')
-					# redirect(reverse('my-course', kwargs={ 'courses': teacher_course }))
-				return redirect("show", pk=request.user.id)
+				# if user.is_staff:
+				# 	return redirect('my-courses')
+				# 	# redirect(reverse('my-course', kwargs={ 'courses': teacher_course }))
+				# return redirect("show", pk=request.user.id)
 
 	else:
 		form = LoginForm()

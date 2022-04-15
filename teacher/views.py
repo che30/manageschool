@@ -3,11 +3,13 @@ from attendance.models import Attendance
 from courses.models import Course
 from django.forms import modelformset_factory
 from django.contrib.auth.decorators import login_required
+from account.decorators import allowed_users
 # from marks.forms import UpdateMarkForm
 from marks.models import Mark
 import datetime
 # Create your views here.
 @login_required(login_url="/login")
+@allowed_users(allowed_roles=['staff'])
 def show_teacher_view(request):
     context = {}
     teacher_course = Course.objects.filter(teacher__institutional_email =request.user.email)
