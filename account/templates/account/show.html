@@ -14,6 +14,18 @@
 		bottom: 5px;
 		z-index: 1;
 	}
+	.border-t {
+		border-top: 1px solid black;
+	}
+	.border-l {
+		border-left: 1px solid black;
+	}
+	.border-r {
+		border-right: 1px solid black;
+	}
+	.border-b{
+		border-bottom: 1px solid black;
+	}
 </style>
 
 <!-- Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
@@ -26,19 +38,19 @@
 	<div>LECTURER</div>
 	</div> -->
 	<div class="container">
-		<div class="text-center bg-primary text-white">REGISTERED COURSES</div>
-		<div class="row text-center">
-			<div class="col-3"><div>COURSE ID</div></div>
+		<div class="text-center bg-primary text-white ">REGISTERED COURSES</div>
+		<div class="row text-center border-l border-r border-t ">
+			<div class="col-3 "><div>COURSE ID</div></div>
 			<div class="col-3"><div> COURSE CREDIT</div></div>
 			<div class="col-3"><div>HOURS REQUIRED </div></div>
 			<div class="col-3"><div>LECTURER</div></div>
 		</div>
 	</div>
 	{% for attends in attendance %}
-	<div class="row text-center">
-		<div class="col-3"><div>{{attends.course}} </div></div>
+	<div class="row text-center border-b border-r border-l border-t ">
+		<div class="col-3 "><div>{{attends.course}} </div></div>
 		<div class="col-3"><div>{{attends.course.course_credit}} </div></div>
-		<div class="col-3"><div>{{attends.course.course_hours}} </div></div>
+		<div class="col-3 "><div>{{attends.course.course_hours}} </div></div>
 		<div class="col-3"><div>{{attends.course.teacher}} </div></div>
 	</div>
 	
@@ -47,7 +59,7 @@
 	<h1 class="text-center bg-success text-white">You have no course registered yet</h1>
 	{%endif %}
 	{% if course_marks %}
-	 <div class="text-center bg-primary text-white">RESULTS</div>
+	 <div class="text-center bg-primary text-white mt-5">RESULTS</div>
 	 <div class="container">
 		 <div class="row text-center">
 			 <div class="col-4">
@@ -56,9 +68,15 @@
 			 <div class="col-4">
 				 CONTINUOUS ASSESMENT
 			 </div>
-			 <div class="col-4">
+			 <div class="col-2">
 				 EXAM
 			 </div>
+			 <div class="col-1">
+				TOTAL
+			</div>
+			<div class="col-1">
+				GRADE
+			</div>
 		 </div>
 	 </div>
 	{% for mark in course_marks %}
@@ -69,8 +87,14 @@
 		<div class="col-4">
 			<div>{{mark.ca}}</div>
 		</div>
-		<div class="col-4">
+		<div class="col-2">
 			<div>{{mark.exam}}</div>
+		</div>
+		<div class="col-1">
+			{{mark.total}}
+		</div>
+		<div class="col-1">
+			{{mark.grade}}
 		</div>
 	</div>
 	{% endfor %}

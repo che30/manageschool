@@ -3,10 +3,12 @@ from django.shortcuts import redirect
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            if request.user.is_staff:
+            if request.user.is_staff and request.user.is_admin == False:
                 return redirect('my-courses')
-            else:
+            elif request.user.is_staff==False and request.user.is_admin == False:
                 return redirect('show',pk=request.user.id)
+            else:
+                return redirect('transcripts')
         else:
             return view_func(request,*args, **kwargs)
     return wrapper_func

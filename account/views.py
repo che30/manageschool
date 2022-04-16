@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render
 from django.http import Http404
 from django.shortcuts import render, redirect
@@ -40,9 +41,10 @@ def register_view(request, *args, **kwargs):
 		form = RegistrationForm()
 		context['registration_form'] = form
 	return render(request, 'account/register.html', context)
-@login_required(login_url="/login")
+@login_required(login_url="login")
 @allowed_users(allowed_roles=['student'])
 def show_view(request, pk):
+	print(request.user.id)
 	context = {}
 	current_date = datetime.datetime.now()
 	attendance = None
@@ -103,6 +105,9 @@ def get_redirect_if_exists(request):
 		if request.GET.get("next"):
 			redirect = str(request.GET.get("next"))
 	return redirect
-@login_required(login_url="/login")
-def admins_only_view(request):
-	return HttpResponse(request, "admin/")
+@login_required(login_url="login")
+@allowed_users(allowed_roles=['admin'])
+def transcript_view(request):
+	context = {}
+	print(request.POST.get('matricule'))
+	return render(request, "account/transcript.html",context)

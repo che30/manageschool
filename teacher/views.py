@@ -44,9 +44,23 @@ course_id=course_id))
                 mark.ca = int(request.POST.get(f"form-{index}-{exam_type}"))
             elif exam_type == 'exam':
                 mark.exam = int(request.POST.get(f"form-{index}-{exam_type}"))
+                mark.total = mark.ca + mark.exam
             else:
                 mark.resit = int(request.POST.get(f"form-{index}-{exam_type}"))
             # mark.exam_type = int(request.POST.get(f"form-{index}-{exam_type}"))
+            mark.save()
+        all_marks = Mark.objects.all()
+        for mark in all_marks:
+            if mark.total >=80 and mark.total <=100:
+                mark.grade = 'A'
+            elif mark.total >=60 and mark.total<=79:
+                mark.grade = 'B'
+            elif mark.total >=50 and mark.total<=59:
+                mark.grade = 'C'
+            elif mark.total >=40 and mark.total<=49:
+                mark.grade = 'D'
+            else:
+                mark.grade = 'F'
             mark.save()
         return redirect('my-courses')
    context['student_marks'] = student_marks

@@ -12,7 +12,9 @@ class Mark(models.Model):
     ca = models.IntegerField(verbose_name=" continuous assesment",default=0)
     exam = models.IntegerField(verbose_name="Exams assesment",default=0)
     resit = models.IntegerField(verbose_name="Resit",default=0)
+    total = models.IntegerField(verbose_name='total',default=0)
+    grade = models.CharField(max_length=1, default=None)
     def __str__(self):
-        return"%s %s %s " %(self.student.first_name,
+        return"%s %s %s %s %s" %(self.student.first_name,
          self.student.last_name,
-         self.student.matricule_number)
+         self.student.matricule_number, self.total, self.grade)
