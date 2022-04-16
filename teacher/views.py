@@ -27,6 +27,7 @@ def render_update_marks(request,course_id, id=None):
    if  request.user.is_authenticated == False:
        return redirect('login')
    context = {}
+   context['course_name'] = Course.objects.get(pk=course_id).name
    student_marks = []
    current_date = datetime.datetime.now()
    attendance_date_arr = []
