@@ -65,6 +65,12 @@ course_id=course_id))
                 mark.grade = 'F'
             mark.save()
         return redirect('my-courses')
+   if id ==1:
+       context['exam'] = 'Continous Assesment'
+   elif id ==2:
+       context['exam'] = 'EXAM'
+   else:
+       context['exam'] = 'RESIT'
    context['student_marks'] = student_marks
    context['form'] = form
    context['course_id'] = course_id
