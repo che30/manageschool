@@ -65,13 +65,10 @@ def show_view(request, pk):
 def logout_view(request):
 	logout(request)
 	return redirect("login")
-# @allowed_users(allowed_roles=['student','staff'])
 @unauthenticated_user
 def login_view(request, *args, **kwargs):
 	context = {}
 	user = request.user
-
-	destination = get_redirect_if_exists(request)
 
 	if request.POST:
 		form = LoginForm(request.POST)
@@ -81,14 +78,12 @@ def login_view(request, *args, **kwargs):
 			user = authenticate(email=email, password=password)
 			if user:
 				login(request, user)
-				if destination:
-					return redirect(destination)
-				# user = Account.objects(pk = request.user.id)
-				# return redirect('show')
-				# if user.is_staff:
-				# 	return redirect('my-courses')
-				# 	# redirect(reverse('my-course', kwargs={ 'courses': teacher_course }))
-				# return redirect("show", pk=request.user.id)
+			if request.user.is_staff and request.user.is_admin == False:
+				return redirect('my-courses')
+			elif request.user.is_staff==False and request.user.is_admin == False:
+				return redirect('show',pk=request.user.id)
+			else:
+				return redirect('transcripts')
 
 	else:
 		form = LoginForm()
