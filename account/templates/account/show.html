@@ -64,10 +64,8 @@
 	}
 </style>
 <script>
-    function generatePDF() {
-        // Choose the element that our invoice is rendered in.
+    const generatePDF = () => {
         const element = document.getElementById('form-b');
-        // Choose the element and save the PDF for our user.
         html2pdf().from(element).save();
     }
 </script>
