@@ -7,12 +7,42 @@
     }
     
 </style>
-
+<script>
+    function generatePDF() {
+        // Choose the element that our invoice is rendered in.
+        const element = document.getElementById('transcript');
+        // Choose the element and save the PDF for our user.
+        html2pdf().from(element).save();
+    }
+</script>
 <div class=" text-center">
     <form action="" method="POST">{% csrf_token %}
       <div>  <input class="input-width" type="text" name="matricule" id="matricule" placeholder="Enter matricule"></div>
        <div class="mt-2"> <button class="btn btn-l bg-primary text-white">submit</button></div>
     </form>
 </div>
+{% if marks %}
+<div id="transcript">
+<div  class="d-flex justify-content-around">
+   <div> {{marks.0.student.first_name}}</div>
+   <div> {{marks.0.student.last_name}}</div>
+   <div> {{marks.0.student.date_of_birth}}</div>
+   <div> {{marks.0.student.matricule_number}}</div>
+</div>
+{% for course_mark in marks %}
+<div class="d-flex justify-content-around mt-3">
+    <div>
+        {{course_mark.course}}
+    </div>
+    <div>
+        {{course_mark.grade}}
+    </div>
+</div>
+{%endfor%}
+</div>
+<div class="text-center">
+    <div class="btn btn-danger btn-lg " onclick="generatePDF()">Download as PDF</div>
+</div>
+{% endif %}
 	
 {% endblock content %}

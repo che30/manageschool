@@ -44,7 +44,6 @@ def register_view(request, *args, **kwargs):
 @login_required(login_url="login")
 @allowed_users(allowed_roles=['student'])
 def show_view(request, pk):
-	print(request.user.id)
 	context = {}
 	current_date = datetime.datetime.now()
 	attendance = None
@@ -53,8 +52,8 @@ def show_view(request, pk):
 		Account.objects.get(pk = pk)
 		user = Student.objects.get(institutional_email = request.user.email)
 		attendance = Attendance.objects.filter(student_id = user.id,
-		date__contains=str(current_date)[:4])
-		course_marks =  Mark.objects.filter(student_id = user.id).filter(attendance__date__contains='2022')
+		date__contains= str(current_date)[:4])
+		course_marks =  Mark.objects.filter(student_id = user.id).filter(attendance__date__contains = str(current_date)[:4])
 	except Account.DoesNotExist:
 		return render(request,'404.html')
 	if request.user.id != pk:
@@ -108,6 +107,16 @@ def get_redirect_if_exists(request):
 @login_required(login_url="login")
 @allowed_users(allowed_roles=['admin'])
 def transcript_view(request):
+	current_date = datetime.datetime.now()
+	id = None
 	context = {}
-	print(request.POST.get('matricule'))
+	if request.POST:
+		mat_num = request.POST.get('matricule')
+		try:
+			id = Student.objects.get(matricule_number = mat_num).id
+			mark =  Mark.objects.filter(student_id = id)
+			print(mark)
+			context['marks'] = mark
+		except Student.DoesNotExist:
+			return render(request,'404.html')
 	return render(request, "account/transcript.html",context)

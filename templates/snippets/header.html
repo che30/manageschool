@@ -1,9 +1,42 @@
-<div class="d-flex justify-content-center mt-3">
+<style>
+	.backround__blue{
+		background-color: rgb(7, 7, 119);
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		padding: 10px 5px 10px 5px;
+	}
+	nav div a {
+		color: white;
+	}
+	.log__out {
+		width: 55px;
+	}
+	.slash {
+		font-weight: 900;
+		/* font-size: 20px; */
+	}
+	.change__password{
+		padding-left: 10px;
+	}
+	.color__yellow{
+		color: yellow;
+		font-weight: 900;
+	}
+</style>
+<div class="d-flex">
 	{% if request.user.is_authenticated == False %}
 	<div><a href="{% url 'register' %}" class="text-decoration-none"> Register</a></div>
 	<div class="mx-3"><a href="{% url 'login' %}" class="text-decoration-none"> Login</a></div>
 	{%else%}
-	<div><a href="{% url 'logout' %}" class="text-decoration-none"> Logout</a></div>
+	<nav class="backround__blue ">
+		<div class="color__yellow"><span>Logged in as</span> <span>{{request.user.email}}</span></div>
+		<div class="d-flex">
+		<div class="log__out"><a href="{% url 'logout' %}"> Logout</a></div>
+		<div class="text-white slash">/</div>
+		  <div class="change__password"> <a href=""> change password</a></div>
+		</div>
+	</nav>
 	{% endif %}
 
 </div>

@@ -47,6 +47,7 @@ course_id=course_id))
                 mark.total = mark.ca + mark.exam
             else:
                 mark.resit = int(request.POST.get(f"form-{index}-{exam_type}"))
+                mark.total = mark.ca + mark.resit
             # mark.exam_type = int(request.POST.get(f"form-{index}-{exam_type}"))
             mark.save()
         all_marks = Mark.objects.all()

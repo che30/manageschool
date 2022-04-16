@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-{% include 'snippets/header.html' %}
+{% include 'snippets/login_logout.html' %}
 
 <style type="text/css">
 
@@ -30,10 +30,8 @@
 
 </style>
 
-<div class="container-fluid">
-	<div class="row justify-content-center">
+<div class="container-fluid mt-5">
 		<div class="card card-signin">
-		  <div class="card-body">
 		    <form class="form-signin" method="post">{% csrf_token %}
 				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 
@@ -42,7 +40,7 @@
 
 				<input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
 
-				<input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
+				<input type="password" name="password2" id="inputPassword2" class="form-control mt-3" placeholder="Confirm password" required>
 
 				{% for field in registration_form %}
 				<p>
@@ -61,8 +59,6 @@
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 
 				</form>
-		  </div>
-		</div>
 		
 	</div>
 </div>

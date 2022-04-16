@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-{% include 'snippets/header.html' %}
+{% include 'snippets/login_logout.html' %}
 
 <style type="text/css">
 
@@ -25,10 +25,9 @@
 
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid mt-5">
 	<div class="row justify-content-center">
 		<div class="card card-signin">
-		  <div class="card-body">
 		    <form class="form-signin"action="{% url 'login' %}" method="post">{% csrf_token %}
 				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 
@@ -54,7 +53,6 @@
 				<div class="d-flex flex-column my-4">
 					<a class="m-auto" href="#">Reset password</a>
 				</div>
-		  </div>
 		</div>
 		
 	</div>

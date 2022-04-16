@@ -1,0 +1,23 @@
+<style>
+	.backround__blue{
+		background-color: rgb(7, 7, 119);
+		width: 100%;
+		display: flex;
+        align-items: center;
+		justify-content: right;
+		padding: 10px 5px 10px 5px;
+	}
+	nav div a {
+		color: white;
+	}
+	.register {
+		/* width: 55px; */
+	}
+    .btn {
+        border: 2px solid yellow;
+    }
+</style>
+<nav class="backround__blue ">
+    <div class="btn register"><a href="{% url 'register' %}" class="text-decoration-none"> Register</a></div>
+    <div class="mx-3 btn"><a href="{% url 'login' %}" class="text-decoration-none"> Login</a></div>
+</nav>
