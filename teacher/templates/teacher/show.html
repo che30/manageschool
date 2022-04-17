@@ -17,6 +17,10 @@
 	h1{
 		font-size: 2rem;
 	}
+	.blue__color a{
+		color: rgb(12, 12, 219);
+		font-size: 1.5rem;
+	}
 </style>
 
 <!-- Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
@@ -26,7 +30,7 @@
 		   {% if teacher_course %}
 		   <h1 class="text-center bg-primary text-white"> YOUR COURSES TOUGHT </h1>
 		   {% for course in teacher_course %}
-		   <div class="d-flex justify-content-around">
+		   <div class="d-flex justify-content-around blue__color">
 			 
 			<!-- <a href="/polls/{{ question.id }}/"> -->
 			<div><a href="/my-courses/{{course.id}}/1"><span>CONTINUOS ASSESMENT</span> <span>{{course.name}}</span></a></div>
