@@ -42,7 +42,7 @@ def register_view(request, *args, **kwargs):
 		context['registration_form'] = form
 	return render(request, 'account/register.html', context)
 @login_required(login_url="login")
-@allowed_users(allowed_roles=['student'])
+# @allowed_users(allowed_roles=['student'])
 def show_view(request, pk):
 	context = {}
 	current_date = datetime.datetime.now()
@@ -100,7 +100,7 @@ def get_redirect_if_exists(request):
 			redirect = str(request.GET.get("next"))
 	return redirect
 @login_required(login_url="login")
-@allowed_users(allowed_roles=['admin'])
+# @allowed_users(allowed_roles=['admin'])
 def transcript_view(request):
 	current_date = datetime.datetime.now()
 	id = None
